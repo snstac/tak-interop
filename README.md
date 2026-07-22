@@ -8,6 +8,11 @@ catalog contracts, and artifact validation.
 It deliberately does not own source adapters, authentication policy, storage,
 or domain-specific Cursor on Target serialization.
 
+The service ownership and federation rules are documented in
+[ARCHITECTURE.md](ARCHITECTURE.md). The package's stable discovery contract is
+served by each application at `/.well-known/tak-products.json` and
+`/api/v1/products`.
+
 ```bash
 python -m pip install -e '.[test]'
 pytest
