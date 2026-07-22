@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.snstac.com/tak-product-v1.json",
+  "title": "TAK Product",
+  "type": "object",
+  "required": ["schema_version", "id", "name", "kind", "authority", "attribution", "terms_url", "artifacts"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._:-]*$"},
+    "name": {"type": "string", "minLength": 1},
+    "kind": {"enum": ["camera_catalog", "vector_layer", "raster_layer", "elevation", "bundle"]},
+    "authority": {"type": "string", "minLength": 1},
+    "attribution": {"type": "string", "minLength": 1},
+    "terms_url": {"type": "string", "format": "uri"},
+    "access": {"enum": ["public", "session", "bearer", "restricted"]},
+    "bounds": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}},
+    "time_windows": {"type": "array", "items": {"type": "string"}},
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["rel", "media_type", "href"],
+        "properties": {
+          "rel": {"type": "string"},
+          "media_type": {"type": "string"},
+          "href": {"type": "string", "format": "uri"},
+          "title": {"type": "string"}
+        }
+      }
+    }
+  }
+}
