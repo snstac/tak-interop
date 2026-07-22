@@ -80,8 +80,8 @@ class MissionPackageBuilder:
         root = ET.Element("MissionPackageManifest", {"version": "2"})
         configuration = ET.SubElement(root, "Configuration")
         for name, value in (
-            ("uid", self.uid),
             ("name", self.name),
+            ("uid", self.uid),
             ("onReceiveDelete", str(self.on_receive_delete).lower()),
         ):
             ET.SubElement(configuration, "Parameter", {"name": name, "value": value})
