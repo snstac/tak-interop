@@ -13,6 +13,7 @@ def network_link_kml(url: str, *, title: str, refresh_seconds: int = 120) -> byt
         raise ValueError("network link URL must use HTTP(S)")
     if refresh_seconds < 15:
         raise ValueError("network link refresh must be at least 15 seconds")
+    ET.register_namespace("", KML_NS)
     root = ET.Element(f"{{{KML_NS}}}kml")
     document = ET.SubElement(root, f"{{{KML_NS}}}Document")
     ET.SubElement(document, f"{{{KML_NS}}}name").text = title

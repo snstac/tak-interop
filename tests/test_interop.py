@@ -58,7 +58,9 @@ def test_uri_and_network_link_builders_encode_values() -> None:
         [{"key": "prefs_dted_stream", "type": "boolean", "value": "true"}]
     )
     assert "key1=prefs_dted_stream" in preference
-    assert ET.fromstring(network_link_kml("https://example.test/live.kml", title="Live")).tag.endswith("kml")
+    kml = network_link_kml("https://example.test/live.kml", title="Live")
+    assert b'<kml xmlns="http://www.opengis.net/kml/2.2">' in kml
+    assert ET.fromstring(kml).tag.endswith("kml")
 
 
 def test_product_catalog_round_trip(tmp_path: Path) -> None:
