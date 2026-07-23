@@ -1,0 +1,45 @@
+.tak-camera-profile {
+  --tcp-panel: #111e1a; --tcp-line: rgba(213,228,218,.14); --tcp-text: #eef4ed;
+  --tcp-muted: #9cad9f; --tcp-accent: #f2c94c; --tcp-online: #63d59b;
+  --tcp-degraded: #f2c94c; --tcp-offline: #ec775f; --tcp-mono: "SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  width: min(920px, calc(100vw - 40px)); max-height: calc(100dvh - 40px); padding: 0;
+  border: 1px solid rgba(238,244,237,.18); border-radius: 7px; background: var(--tcp-panel);
+  color: var(--tcp-text); box-shadow: 0 30px 90px rgba(0,0,0,.65); font-family: Inter,"Avenir Next",Avenir,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+.tak-camera-profile::backdrop { background: rgba(2,8,6,.72); backdrop-filter: blur(7px); }
+.tak-camera-profile * { box-sizing: border-box; }
+.tak-camera-profile-shell { position: relative; display: grid; grid-template-columns: 1.2fr 1fr; min-height: 620px; }
+.tak-camera-profile-close { position: absolute; z-index: 1001; top: 15px; right: 15px; width: 39px; height: 39px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.22); border-radius: 50%; background: rgba(7,16,14,.75); color: var(--tcp-text); cursor: pointer; }
+.tak-camera-profile-close svg { width: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.tak-camera-profile-visuals { display: grid; grid-template-rows: minmax(310px,1fr) 260px; min-width: 0; background: #0b1411; }
+.tak-camera-feed-frame { position: relative; min-height: 310px; overflow: hidden; background: #0b1411; }
+.tak-camera-feed-frame > img,.tak-camera-feed-frame > video { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; }
+.tak-camera-feed-frame > img { filter: saturate(.6) contrast(1.1); }
+.tak-camera-feed-frame > video[hidden],.tak-camera-feed-placeholder[hidden] { display: none; }
+.tak-camera-feed-placeholder { position: absolute; inset: 0; display: grid; place-items: center; padding: 35px; color: var(--tcp-muted); text-align: center; font: .7rem/1.6 var(--tcp-mono); }
+.tak-camera-feed-frame::after { content:""; position:absolute; inset:0; background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,rgba(0,0,0,.09) 4px); pointer-events:none; }
+.tak-camera-feed-overlay { position:absolute; z-index:2; left:20px; right:20px; bottom:18px; display:flex; justify-content:space-between; font:.61rem var(--tcp-mono); letter-spacing:.06em; }
+.tak-camera-feed-badge { padding:6px 8px; border-radius:2px; background:var(--tcp-online); color:#07100e; text-transform:uppercase; }
+.tak-camera-feed-badge.degraded { background:var(--tcp-degraded); }.tak-camera-feed-badge.offline { background:var(--tcp-offline); }.tak-camera-feed-badge.cached { background:#aeb9b1; }
+.tak-camera-feed-time { padding:6px 8px; background:rgba(7,16,14,.75); }.tak-camera-feed-time[hidden] { display:none; }
+.tak-camera-profile-map { position:relative; min-height:240px; border-top:1px solid var(--tcp-line); background:#111c18; z-index:1; }
+.tak-camera-bearing-marker { border:0; background:transparent; }.tak-camera-bearing-arrow { position:relative; width:24px; height:52px; transform-origin:12px 45px; }
+.tak-camera-bearing-arrow::before { content:""; position:absolute; left:11px; top:8px; bottom:7px; width:2px; background:var(--tcp-accent); box-shadow:0 0 7px rgba(242,201,76,.8); }
+.tak-camera-bearing-arrow::after { content:""; position:absolute; top:3px; left:7px; width:9px; height:9px; border-top:2px solid var(--tcp-accent); border-right:2px solid var(--tcp-accent); transform:rotate(-45deg); }
+.tak-camera-spi-marker { display:block; width:17px; height:17px; border:2px solid #fff; border-radius:50%; background:#e24c4c; box-shadow:0 0 0 5px rgba(226,76,76,.2); }
+.tak-camera-reticle { position:absolute; z-index:2; inset:50%; width:80px; height:80px; transform:translate(-50%,-50%); opacity:.5; }
+.tak-camera-reticle::before,.tak-camera-reticle::after { content:""; position:absolute; background:rgba(255,255,255,.45); }.tak-camera-reticle::before { left:50%; top:20px; bottom:20px; width:1px; }.tak-camera-reticle::after { top:50%; left:20px; right:20px; height:1px; }
+.tak-camera-reticle i { position:absolute; width:14px; height:14px; border-color:var(--tcp-accent); border-style:solid; }.tak-camera-reticle i:nth-child(1){top:0;left:0;border-width:1px 0 0 1px}.tak-camera-reticle i:nth-child(2){top:0;right:0;border-width:1px 1px 0 0}.tak-camera-reticle i:nth-child(3){bottom:0;left:0;border-width:0 0 1px 1px}.tak-camera-reticle i:nth-child(4){bottom:0;right:0;border-width:0 1px 1px 0}
+.tak-camera-profile-content { padding:56px 36px 32px; overflow-y:auto; }
+.tak-camera-profile-content h2 { margin:0; font-size:2rem; line-height:1.03; letter-spacing:-.045em; }.tak-camera-place { margin:11px 0 28px; color:var(--tcp-muted); font-size:.84rem; }
+.tak-camera-eyebrow,.tak-camera-section-label { margin:0 0 18px; color:var(--tcp-accent); font:.68rem var(--tcp-mono); letter-spacing:.14em; text-transform:uppercase; }.tak-camera-eyebrow span { display:inline-block; width:26px; height:1px; margin:0 10px 3px 0; background:currentColor; }.tak-camera-eyebrow b { font-weight:400; }
+.tak-camera-profile-warning { margin:-25px 42px 25px 0; padding:10px 12px; border:1px solid rgba(242,201,76,.4); border-radius:3px; background:rgba(242,201,76,.08); color:#e8d68d; font:.65rem/1.5 var(--tcp-mono); }.tak-camera-profile-warning[hidden]{display:none}
+.tak-camera-facts { display:grid; grid-template-columns:1fr 1fr; margin:0 0 30px; border-top:1px solid var(--tcp-line); }.tak-camera-facts div { padding:14px 0; border-bottom:1px solid var(--tcp-line); }.tak-camera-facts div:nth-child(odd){border-right:1px solid var(--tcp-line)}.tak-camera-facts div:nth-child(even){padding-left:17px}.tak-camera-facts dt{margin-bottom:5px;color:#788a7e;font:.58rem var(--tcp-mono);text-transform:uppercase;letter-spacing:.08em}.tak-camera-facts dd{margin:0;color:#d9e2dc;font:.7rem/1.4 var(--tcp-mono)}
+.tak-camera-actions { display:flex; gap:9px; }.tak-camera-actions .tak-camera-button{flex:1}.tak-camera-button{display:inline-flex;min-height:42px;align-items:center;justify-content:center;padding:0 16px;border:1px solid transparent;border-radius:3px;text-decoration:none;font-size:.72rem;font-weight:750;cursor:pointer}.tak-camera-primary{background:var(--tcp-accent);color:#181507}.tak-camera-secondary{border-color:var(--tcp-line);background:transparent;color:var(--tcp-text)}.tak-camera-button:disabled,.tak-camera-button[aria-disabled="true"]{pointer-events:none;opacity:.45}
+.tak-camera-attribution { margin:18px 0 0; color:#718177; font-size:.65rem; line-height:1.45; }.tak-camera-profile-tak{margin-top:26px;padding-top:22px;border-top:1px solid var(--tcp-line)}
+.tak-camera-profile-scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:12px 0;padding:0;border:0}.tak-camera-profile-scopes label{display:flex;align-items:center;gap:7px;padding:10px;border:1px solid var(--tcp-line);border-radius:4px;color:var(--tcp-muted);font:.64rem var(--tcp-mono);cursor:pointer}.tak-camera-profile-scopes label:has(input:checked){border-color:rgba(242,201,76,.5);color:var(--tcp-text);background:rgba(242,201,76,.05)}.tak-camera-profile-scopes input{width:auto;accent-color:var(--tcp-accent)}
+.tak-camera-export-count,.tak-camera-expiry{color:var(--tcp-muted);font:.64rem/1.45 var(--tcp-mono)}.tak-camera-export-count strong{color:var(--tcp-text)}.tak-camera-export-warning{color:#e8d68d;font:.64rem/1.45 var(--tcp-mono)}.tak-camera-export-warning[hidden]{display:none}.tak-camera-profile-qr{width:180px;min-height:180px;display:grid;place-items:center;margin:15px 0;padding:10px;border-radius:4px;background:#fff;color:#111;text-align:center;font:.65rem/1.4 var(--tcp-mono)}.tak-camera-profile-qr img,.tak-camera-profile-qr canvas{max-width:160px;max-height:160px;height:auto}
+.tak-camera-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.tak-camera-toast{position:fixed;z-index:2000;left:50%;bottom:25px;padding:11px 16px;border:1px solid rgba(213,228,218,.14);border-radius:4px;background:#19251f;color:#eef4ed;box-shadow:0 12px 35px rgba(0,0,0,.35);font:.76rem Inter,"Segoe UI",sans-serif;transform:translate(-50%,150%);opacity:0;transition:transform .22s ease,opacity .22s ease}.tak-camera-toast.is-visible{transform:translate(-50%,0);opacity:1}
+@media(max-width:840px){.tak-camera-profile-shell{grid-template-columns:1fr}.tak-camera-profile-visuals{grid-template-rows:310px 240px}.tak-camera-feed-frame{min-height:310px}.tak-camera-profile-content{padding:35px 24px 25px}}
+@media(max-width:520px){.tak-camera-profile{width:calc(100vw - 18px);max-height:calc(100dvh - 18px)}.tak-camera-profile-shell{display:block}.tak-camera-feed-frame{min-height:240px}.tak-camera-profile-visuals{grid-template-rows:240px 220px}.tak-camera-facts{grid-template-columns:1fr}.tak-camera-facts div:nth-child(odd){border-right:0}.tak-camera-facts div:nth-child(even){padding-left:0}.tak-camera-actions{flex-direction:column}}

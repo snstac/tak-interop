@@ -5,7 +5,9 @@ by DTED.org, Cambot, and FireCOP. It owns deterministic TAK Mission Package
 construction, ATAK handoff URIs, KML NetworkLinks, QR rendering, product
 catalog and asset contracts, and artifact validation. Product contracts carry
 canonical UI links and fire/disaster/USAR domains; vector assets have stable
-live, historical, and tombstone identities.
+live, historical, and tombstone identities. Version 1.2 also packages the
+shared Cambot camera-profile browser component used by both Cambot and
+FireCOP, including its pinned HLS.js runtime.
 
 It deliberately does not own source adapters, authentication policy, storage,
 or domain-specific Cursor on Target serialization.
@@ -20,5 +22,8 @@ python -m pip install -e '.[test]'
 pytest
 tak-validate package.zip
 ```
+
+Web applications can mount `takinterop.web_assets_path()` at a static URL and
+load `camera-profile.css`, `vendor/hls.min.js`, then `camera-profile.js`.
 
 Licensed under Apache-2.0.

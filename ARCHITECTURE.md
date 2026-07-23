@@ -9,7 +9,7 @@ does not turn the participating services into one deployment.
 | FireCOP | Protected incident COP, private adapter-backed products, operator subscriptions, advisory analysis | FireCOP operators |
 | layers.firecop.us | Canonical anonymous approved fire/disaster/USAR products and assets, open GIS formats, TAK packages, Sentinel tile cache | TAK and GIS clients; FireCOP handoff |
 | DTED.org | Elevation acquisition, quality gates, streaming endpoints and DTED client preferences | TAK elevation clients |
-| tak-interop | Product discovery schema, Mission Package construction, NetworkLinks, TAK URIs, QR helpers and validation | All services |
+| tak-interop | Product discovery schema, Mission Package construction, NetworkLinks, TAK URIs, QR helpers, validation, and the host-configurable camera profile UI | All services |
 
 Every participating service exposes `GET /.well-known/tak-products.json` and
 `GET /api/v1/products`. Product identifiers are stable within the owning
@@ -21,6 +21,13 @@ to public layer artifacts; Cambot and the public layers service do not call
 back into FireCOP. DTED remains an independent elevation service. This avoids
 circular availability dependencies and keeps source-specific credentials with
 the service that owns each integration.
+
+Cambot and FireCOP mount the same packaged camera profile JavaScript and CSS.
+Cambot supplies its native camera payload and directory-aware export scopes;
+FireCOP resolves its local stable UID, fetches the exact camera from Cambot,
+and supplies only the single-camera export scope. If Cambot cannot be reached,
+FireCOP may show its last normalized inventory record only as a labeled cached
+fallback, with media and export actions disabled.
 
 Public redistribution is fail-closed. Originating agencies remain the data
 authorities; layers.firecop.us is the canonical registry and distributor for

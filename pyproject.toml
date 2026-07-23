@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "snstac-tak-interop"
-version = "1.1.0"
+version = "1.2.0"
 description = "Shared TAK product catalogs, mission packages, handoff URIs, and validators"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -22,7 +22,7 @@ tak-validate = "takinterop.cli:main"
 include = ["takinterop*"]
 
 [tool.setuptools.package-data]
-takinterop = ["product.schema.json", "asset.schema.json"]
+takinterop = ["product.schema.json", "asset.schema.json", "web/*", "web/vendor/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
