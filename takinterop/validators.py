@@ -8,7 +8,7 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 from .mission import CANONICAL_MANIFEST_PATH, LEGACY_MANIFEST_PATH
-from .products import TakProduct
+from .products import TakAsset, TakProduct
 
 
 class ValidationError(ValueError):
@@ -79,6 +79,15 @@ def validate_catalog(path: Path) -> dict[str, object]:
         raise ValidationError(str(error)) from error
 
 
+def validate_asset(path: Path) -> dict[str, object]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+        asset = TakAsset.from_dict(value)
+        return {"valid": True, "kind": "tak_asset", "asset_id": asset.id}
+    except (OSError, TypeError, ValueError, KeyError, json.JSONDecodeError) as error:
+        raise ValidationError(str(error)) from error
+
+
 def validate_path(value: str | Path) -> dict[str, object]:
     path = Path(value)
     suffix = path.suffix.lower()
@@ -87,5 +96,11 @@ def validate_path(value: str | Path) -> dict[str, object]:
     if suffix in {".xml", ".kml", ".cot", ".pref"}:
         return validate_xml(path)
     if suffix == ".json":
+        try:
+            value = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            raise ValidationError(str(error)) from error
+        if isinstance(value, dict) and "lifecycle_state" in value:
+            return validate_asset(path)
         return validate_catalog(path)
     raise ValidationError(f"unsupported artifact extension: {suffix or '<none>'}")

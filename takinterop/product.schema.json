@@ -13,8 +13,27 @@
     "attribution": {"type": "string", "minLength": 1},
     "terms_url": {"type": "string", "format": "uri"},
     "access": {"enum": ["public", "session", "bearer", "restricted"]},
+    "canonical_url": {"type": "string", "format": "uri"},
+    "domains": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"enum": ["fire", "disaster", "usar"]}
+    },
     "bounds": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}},
     "time_windows": {"type": "array", "items": {"type": "string"}},
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rel", "href"],
+        "properties": {
+          "rel": {"type": "string", "minLength": 1},
+          "href": {"type": "string", "format": "uri"},
+          "title": {"type": "string"},
+          "media_type": {"type": "string"}
+        }
+      }
+    },
     "artifacts": {
       "type": "array",
       "minItems": 1,

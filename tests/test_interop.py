@@ -11,6 +11,8 @@ import pytest
 from takinterop import (
     Artifact,
     MissionPackageBuilder,
+    RelatedLink,
+    TakAsset,
     TakProduct,
     atak_import_uri,
     atak_preference_uri,
@@ -74,8 +76,41 @@ def test_product_catalog_round_trip(tmp_path: Path) -> None:
         artifacts=(Artifact("geojson", "application/geo+json", "https://example.test/layer.geojson"),),
         bounds=(-124.5, 32.0, -114.0, 42.2),
         time_windows=("24h", "48h"),
+        canonical_url="https://example.test/products/example-layer",
+        domains=("fire",),
+        links=(RelatedLink("open", "https://example.test/map", "Open map"),),
     )
     value = product_catalog("example", [product], generated_at="2026-07-22T00:00:00Z")
     path = tmp_path / "products.json"
     path.write_text(json.dumps(value), encoding="utf-8")
     assert validate_path(path) == {"valid": True, "kind": "product_catalog", "products": 1}
+
+
+def test_asset_round_trip_and_tombstone_validation(tmp_path: Path) -> None:
+    asset = TakAsset(
+        id="firecop-123",
+        name="Example perimeter",
+        kind="fire_perimeter",
+        lifecycle_state="live",
+        source_id="example-source",
+        source_name="Example Source",
+        authority="Example Agency",
+        attribution="Example Agency",
+        terms_url="https://example.test/terms",
+        canonical_url="https://example.test/assets/firecop-123",
+        product_ids=("example-layer",),
+        domains=("fire",),
+        geometry={"type": "Point", "coordinates": [-120.0, 38.0]},
+        properties={"status": "active"},
+    )
+    value = asset.to_dict()
+    assert TakAsset.from_dict(value) == asset
+    path = tmp_path / "asset.json"
+    path.write_text(json.dumps(value), encoding="utf-8")
+    assert validate_path(path) == {
+        "valid": True,
+        "kind": "tak_asset",
+        "asset_id": "firecop-123",
+    }
+    with pytest.raises(ValueError):
+        TakAsset(**{**asset.__dict__, "lifecycle_state": "tombstone"})

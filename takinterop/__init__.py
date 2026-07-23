@@ -2,13 +2,15 @@
 
 from .kml import network_link_kml
 from .mission import MissionPackageBuilder
-from .products import Artifact, TakProduct, product_catalog
+from .products import Artifact, RelatedLink, TakAsset, TakProduct, product_catalog
 from .uri import atak_import_uri, atak_preference_uri
 from .validators import ValidationError, validate_path
 
 __all__ = [
     "Artifact",
     "MissionPackageBuilder",
+    "RelatedLink",
+    "TakAsset",
     "TakProduct",
     "ValidationError",
     "atak_import_uri",
@@ -18,4 +20,4 @@ __all__ = [
     "validate_path",
 ]
 
-__version__ = "1.0.3"
+__version__ = "1.1.0"
